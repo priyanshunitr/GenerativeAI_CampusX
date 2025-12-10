@@ -35,14 +35,27 @@ Ensure the summary is clear, accurate, and aligned with the provided style and l
 # template = load_prompt("../template.json")
 
 # fill the placeholders
-prompt = template.invoke({
-    'paper_input': paper_input,
-    'style_input': style_input,
-    'length_input': length_input
-})
+# prompt = template.invoke({
+#     'paper_input': paper_input,
+#     'style_input': style_input,
+#     'length_input': length_input
+# })
 
 if st.button("Summarize"):
-    result = model.invoke(prompt)
+    chain = template | model
+    result = chain.invoke({
+        'paper_input': paper_input,
+        'style_input': style_input,
+        'length_input': length_input
+    })
+    # fill the placeholders
+    # prompt = template.invoke({
+    #     'paper_input': paper_input,
+    #     'style_input': style_input,
+    #     'length_input': length_input
+    # })
+    
+    # result = model.invoke(prompt)
     st.write(result.content)
     
     
